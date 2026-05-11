@@ -29,7 +29,6 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, '../investify-frontend/build')));
 
 import mongoose from 'mongoose';
-const mongoURI = process.env.MONGO_URI;
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
   console.log("Connection Succeded");
