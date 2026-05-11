@@ -3,8 +3,7 @@ import dotenv from "dotenv";
 import getOrderDate, { getCurrentMySQLTime } from "./calculateOrderDate.js";
 dotenv.config();
 const mongoURI = process.env.MONGO_URI;
-mongoose.connect("mongodb://localhost:27017/Investify")
-.then(()=>{
+then(()=>{
   console.log("Connection Succeded");
 }).catch((err)=>{
   console.log(err);
