@@ -2,12 +2,6 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import getOrderDate, { getCurrentMySQLTime } from "./calculateOrderDate.js";
 dotenv.config();
-const mongoURI = process.env.MONGO_URI;
-then(()=>{
-  console.log("Connection Succeded");
-}).catch((err)=>{
-  console.log(err);
-})
 
 export async function findUser(email){
     const Database = mongoose.connection;
