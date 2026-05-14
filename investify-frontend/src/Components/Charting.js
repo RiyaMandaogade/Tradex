@@ -43,7 +43,7 @@ export default function Charting() {
   useEffect(()=>{
     async function fetchGraph(){
       try{
-        let graph = await axios.get(`http://localhost:5000/api/invest/getChart/${shareName}`);
+        let graph = await axios.get(`https://tradex-9o9k.onrender.com/api/invest/getChart/${shareName}`);
         setGraphData(graph.data);
       }catch(err){
         console.log(err);
@@ -55,7 +55,7 @@ export default function Charting() {
   useEffect(()=>{
     async function fetchShareDetails(){
       try{
-        let response = await axios.get(`http://localhost:5000/api/invest/equity/getDetails/${shareName}`);
+        let response = await axios.get(`https://tradex-9o9k.onrender.com/api/invest/equity/getDetails/${shareName}`);
         // console.log(response.data);
         setMarketValue(response.data.Price);
         setChange(response.data.Change);
@@ -77,7 +77,7 @@ export default function Charting() {
   })
 
   useEffect(() => {
-    const newSocket = io('http://localhost:5000');
+    const newSocket = io('https://tradex-9o9k.onrender.com');
     setSocket(newSocket);
     newSocket.on('connect', () => {
       if (shareName) {
@@ -172,7 +172,7 @@ export default function Charting() {
   const addAlert = async (e) => {
     e.preventDefault();
     try{
-      let response = await axios.post("http://localhost:5000/api/invest/users/setAlert",{
+      let response = await axios.post("https://tradex-9o9k.onrender.com/api/invest/users/setAlert",{
         body:{
           shareName: shareName,
           price: alertPrice
@@ -202,7 +202,7 @@ export default function Charting() {
   const addToWishList = async (e) =>{
     e.preventDefault();
     try{
-        let response = await axios.post("http://localhost:5000/api/invest/users/addToWatchlist",{
+        let response = await axios.post("https://tradex-9o9k.onrender.com/api/invest/users/addToWatchlist",{
             body:{
                 shareName: shareName,
                 listName: currentList
@@ -219,7 +219,7 @@ export default function Charting() {
     setShowWotshlist(prev => !prev);
     if (!showWishlist) {
       try {
-        let response = await axios.get("http://localhost:5000/api/invest/users/getAllWatchlists");
+        let response = await axios.get("https://tradex-9o9k.onrender.com/api/invest/users/getAllWatchlists");
         console.log(response.data);
         setWishlist(response.data);
       } catch (err) {
@@ -245,7 +245,7 @@ export default function Charting() {
         return;
     }
     try {
-        await axios.post("http://localhost:5000/api/invest/users/createNewWatchList", { watchName });
+        await axios.post("https://tradex-9o9k.onrender.com/api/invest/users/createNewWatchList", { watchName });
         setWishlist([...wishlist, watchName]);
         setShowMsg(false);
     } catch (err) {

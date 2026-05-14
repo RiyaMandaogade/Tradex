@@ -7,7 +7,7 @@ export default function HeldShares() {
   useEffect(() => {
     async function getAllInvestments() {
       try {
-        let response = await axios.get("http://localhost:5000/api/user/allInvestments");
+        let response = await axios.get("https://tradex-9o9k.onrender.com/api/user/allInvestments");
         setInvestments(response.data);
       } catch (err) {
         console.log(err);

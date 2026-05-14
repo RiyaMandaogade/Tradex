@@ -7,7 +7,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function getTotalInvestment() {
       try {
-        let response = await axios.get('http://localhost:5000/api/user/totalInvestments');
+        let response = await axios.get('https://tradex-9o9k.onrender.com/api/user/totalInvestments');
         setTotalInvestment(response.data);
       } catch (err) {
         console.log(err);

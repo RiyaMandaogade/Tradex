@@ -17,7 +17,7 @@
     "socket.io-client": "^4.8.1",
     "web-vitals": "^2.1.4"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://tradex-9o9k.onrender.com/send-otp",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
