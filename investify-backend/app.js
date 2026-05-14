@@ -18,7 +18,7 @@ dotenv.config();
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5000/',
+  origin: 'https://tradex-9o9k.onrender.com',
   methods: ['GET', 'POST'],
   credentials: true
 }));
@@ -41,9 +41,12 @@ const oneDay = 60 * 60 * 24 * 1000;
 const sessionMiddleware = session({
   secret: process.env.SECRET_KEY,
   saveUninitialized: true,
-  cookie: { maxAge: oneDay },
   resave: false,
-  secure: true
+  cookie: {
+    maxAge: oneDay,
+    secure: true,
+    sameSite: "none"
+  }
 });
 
 app.use(sessionMiddleware);
@@ -146,16 +149,34 @@ app.post('/send-otp', async (req, res) => {
       subject: 'Welcome To Investify! - OTP For Login',
       text: `Your OTP for Login at www.investify.in is: ${req.session.otp}. This OTP is only valid for the next 10 minutes. Please Do Not Share This OTP With Anyone even if the person claims to our employee.\nMutual Funds and Equity are subject to Market Risks. Please Analyze all the terms and conditions before Investing.\nHappy Investing!`
     };
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        return console.error(err);
-      }
-      // console.log("Sent Successfully");
+    transporter.sendMail(mailOptions, async (err, info) => {
+
+  if (err) {
+
+    console.log("MAIL ERROR:", err);
+
+    return res.status(500).send({
+      success: false,
+      message: "Failed to send OTP"
     });
-    req.session.userId = await generateRandomSequence(16);
-    req.session.token = jwt.sign({ userId: req.session.userId }, jwtSecret, { expiresIn: '1h' });
-    // console.log(req.session);
-    res.status(200).send("Successful");
+  }
+
+  console.log("MAIL SENT:", info.response);
+
+  req.session.userId = await generateRandomSequence(16);
+
+  req.session.token = jwt.sign(
+    { userId: req.session.userId },
+    jwtSecret,
+    { expiresIn: '1h' }
+  );
+
+  return res.status(200).send({
+    success: true,
+    message: "OTP sent successfully"
+  });
+
+});
   } catch (error) {
     console.log(error);
   }
